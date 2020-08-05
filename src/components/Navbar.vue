@@ -1,0 +1,29 @@
+<template>
+  <div class="navbar">
+    <nav class="nav-extended blue">
+      <div class="nav-content">
+        <router-link :to="{ name: 'Home' }">
+          <span class="nav-title">Juices</span>
+        </router-link>
+        <a href="" class="btn-floating btn-large halfway-fab green">
+          <router-link :to="{ name: 'AddJuice' }">
+            <i class="material-icons">add</i>
+          </router-link>
+        </a>
+      </div>
+    </nav>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Navbar",
+  methods: {}
+};
+</script>
+
+<style>
+.navbar nav {
+  padding: 0 20px;
+}
+</style>
