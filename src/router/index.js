@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import AddJuice from "../components/AddJuice.vue";
+import EditJuice from "../components/EditJuice.vue";
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,11 @@ const routes = [
     path: "/addJuice",
     name: "AddJuice",
     component: AddJuice
+  },
+  {
+    path: "/edit-juice/:juice_slug",
+    name: "EditJuice",
+    component: EditJuice
   }
 ];
 

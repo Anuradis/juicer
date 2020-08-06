@@ -6,19 +6,36 @@
         <label for="title">Juice Title:</label>
         <input type="text" name="title" v-model="title" />
       </div>
-      <div class="field add-ingedient" v-for="(ing, index) in ingredientsList" :key="index">
+      <div
+        class="field add-ingedient"
+        v-for="(ing, index) in ingredientsList"
+        :key="index"
+      >
         <label for="title">Add Ingredient</label>
-        <i class="material-icons delete" @click="deleteIngredient(ing)">delete</i>
-        <input type="text" name="add-ingredient" v-model="ingredientsList[index]" />
+        <i class="material-icons delete-ing" @click="deleteIngredient(ing)"
+          >delete</i
+        >
+        <input
+          type="text"
+          name="ingredient-list"
+          v-model="ingredientsList[index]"
+        />
       </div>
       <div class="field add-ingedient">
         <label for="title">Add Ingredient</label>
-        <input type="text" name="add-ingredient" v-model="another" />
+        <input
+          @keydown.tab.prevent="addIng"
+          type="text"
+          ref="addIngredient"
+          v-model="another"
+        />
       </div>
       <div class="field center-align">
         <p class="red-text" v-if="feedback">{{ feedback }}</p>
         <button class="btn green">Add Juice</button>
-        <button class="btn blue" @click.prevent="addIng">Add Ingredient</button>
+        <button class="btn blue" @click.prevent="addIng">
+          Add Ingredient
+        </button>
       </div>
     </form>
   </div>
@@ -52,12 +69,12 @@ export default {
         });
         db.collection("juices")
           .add({
-             title: this.title,
-             slug: this.slug,
-             ingredients: this.ingedientsList
+            title: this.title,
+            ingredients: this.ingredientsList,
+            slug: this.slug
           })
           .then(() => {
-            this.$router.push({ home: "Home" });
+            this.$router.push("/").catch(() => {});
           })
           .catch(err => console.log(err));
       } else {
@@ -69,15 +86,14 @@ export default {
         this.ingredientsList.push(this.another);
         this.another = null;
         this.feedback = null;
-        console.log(this.ingredientsList, 'ing list')
-        console.log(typeof this.ingredientsList, 'ing list')
       } else {
         this.feedback = "You must enter the value to add a ingredient";
       }
+      this.$refs.addIngredient.focus();
     },
     deleteIngredient(ing) {
-      this.ingedientsList = this.ingredientsList.filter(element => {
-        return element !== ing;
+      this.ingredientsList = this.ingredientsList.filter(element => {
+        return element != ing;
       });
     }
   }
@@ -99,7 +115,7 @@ div.add-juice .field {
   margin: 20px auto;
 }
 
-.delete {
+.delete-ing {
   position: relative;
   left: 30rem;
   top: 5px;

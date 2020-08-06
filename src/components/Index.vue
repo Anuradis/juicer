@@ -2,7 +2,7 @@
   <div class="index container">
     <div class="card" v-for="(juice, index) in juices" :key="index">
       <div class="card-content">
-        <i class="material-icons delete" @click="deleteSmoothie(juice.id)"
+        <i class="material-icons delete" @click="deleteJuice(juice.id)"
           >delete</i
         >
         <h2 class="indigo-text">{{ juice.title }}</h2>
@@ -12,6 +12,13 @@
           </li>
         </ul>
       </div>
+      <span class="btn-floating btn-large halfway-fab indygo">
+        <router-link
+          :to="{ name: 'EditJuice', params: { juice_slug: juice.slug } }"
+        >
+          <i class="material-icons edit">edit</i>
+        </router-link>
+      </span>
     </div>
   </div>
 </template>
@@ -39,7 +46,7 @@ export default {
     };
   },
   methods: {
-    deleteSmoothie(id) {
+    deleteJuice(id) {
       db.collection("juices")
         .doc(id)
         .delete()
